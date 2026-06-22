@@ -99,7 +99,7 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
   <div class="content center" style="max-width:960px">
     <div class="label reveal">SJSU CyberAI Summer Camp · June 22, 2026</div>
     <div class="hero reveal" style="margin-bottom:20px">Curiosity, Passion,<br>and Learning to Learn</div>
-    <p class="sub reveal" style="max-width:720px;margin:0 auto">Matthias Müller · Robotics Team Lead, Apple<br><span style="font-size:.95rem;color:#6e6e73">A journey from Lego to OpenBot.</span></p>
+    <p class="sub reveal" style="max-width:720px;margin:0 auto">Matthias Müller<br><span style="font-size:.95rem;color:#6e6e73">A journey from Lego to OpenBot.</span></p>
   </div>
 </div>
 
@@ -986,19 +986,35 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
   </div>
 </div>
 
+<script>
+// s32 — the classroom clip auto-pauses at #t=197,207. Release keyboard focus
+// from the video element when it pauses near the end so "next" advances the
+// deck instead of toggling the video.
+(function(){
+  var slide = document.getElementById('s32');
+  if (!slide) return;
+  var v = slide.querySelector('video');
+  if (!v) return;
+  var END = 207, EPS = 0.6;
+  v.addEventListener('pause', function(){
+    if (v.currentTime >= END - EPS) v.blur();
+  });
+})();
+</script>
+
 <!-- ═══ OPENBOT CURRICULUM ═══ -->
 <div class="slide" id="s33">
   <div class="content center" style="max-width:1180px">
     <div class="label reveal">OpenBot for education</div>
-    <div class="h2 reveal" style="margin-bottom:22px">A full curriculum on YouTube.</div>
+    <div class="h2 reveal" style="margin-bottom:22px">Lots of videos on YouTube.</div>
     <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1100px;margin:0 auto">
       <div>
         <div class="video-wrap" style="max-width:580px">
           <video controls preload="metadata" muted>
-            <source src="media/openbot_overview_video.mp4#t=87,174" type="video/mp4">
+            <source src="media/openbot_overview_video.mp4#t=88,174" type="video/mp4">
           </video>
         </div>
-        <div style="text-align:center;margin-top:10px;font-size:.95rem;font-weight:600">🏫 Hands-on session</div>
+        <div style="text-align:center;margin-top:10px;font-size:.95rem;font-weight:600">🎓 How to train your robot</div>
       </div>
       <div>
         <div class="video-wrap">
@@ -1017,8 +1033,13 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
 <script>
 (function(){
   var v = document.getElementById('yoda-video');
-  if(!v) return;
-  var phase = 0;  // 0=idle, 1=normal 2→10, 2=fast 10→575, 3=done
+  if (!v) return;
+  var revealEl = v.closest('.reveal');
+  if (!revealEl) return;
+
+  var phase = 0;  // 0=idle, 1=normal 2→10, 2=fast 10→575, 3=ended
+  function resetPhases(){ phase = 0; v.playbackRate = 1; }
+
   v.addEventListener('play', function(){
     if (phase === 0) {
       try { v.currentTime = 2; } catch(e){}
@@ -1030,7 +1051,7 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
     var t = v.currentTime;
     if (phase === 1 && t >= 10) {
       phase = 2;
-      v.playbackRate = 16;   // browsers cap; 16 is safe max for fast-motion feel
+      v.playbackRate = 16;
     } else if (phase === 2 && t >= 575) {  // 9:35
       v.pause();
       v.playbackRate = 1;
@@ -1043,7 +1064,21 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
     else if (t < 575) { phase = 2; v.playbackRate = 16; }
     else { phase = 3; v.playbackRate = 1; }
   });
-  v.addEventListener('ended', function(){ phase = 0; v.playbackRate = 1; });
+  v.addEventListener('ended', resetPhases);
+
+  // Autoplay when the video's reveal step fires
+  function sync(){
+    if (revealEl.style.opacity === '1') {
+      resetPhases();
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){});
+    } else {
+      v.pause();
+    }
+  }
+  new MutationObserver(sync).observe(revealEl, { attributes: true, attributeFilter: ['style'] });
+  if (document.readyState === 'complete') sync();
+  else window.addEventListener('load', sync);
 })();
 </script>
 
@@ -1058,7 +1093,8 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
     <div class="reveal" style="display:flex;justify-content:center;gap:28px;flex-wrap:wrap;font-size:1rem;color:#3a3a3c">
       <span>📐 Hardware designs</span>
       <span>💾 Code</span>
-      <span>📚 Datasets</span>
+      <span>📱 Apps</span>
+      <span>🎬 Videos</span>
       <span>📝 Papers</span>
     </div>
   </div>
