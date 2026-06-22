@@ -893,41 +893,21 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
 <script>
 (function(){
   var v = document.getElementById('mtv-video');
-  if(!v) return;
-  var phase = 0;  // 0=idle, 1=normal 2→10, 2=fast 10→576, 3=normal 576→581, 4=done
-  function reset(){
-    phase = 0;
-    v.playbackRate = 1;
-  }
-  v.addEventListener('play', function(){
-    if (phase === 0) {
+  if (!v) return;
+  var revealEl = v.closest('.reveal');
+  if (!revealEl) return;
+  function sync(){
+    if (revealEl.style.opacity === '1') {
       try { v.currentTime = 2; } catch(e){}
-      phase = 1;
-      v.playbackRate = 1;
-    }
-  });
-  v.addEventListener('timeupdate', function(){
-    var t = v.currentTime;
-    if (phase === 1 && t >= 10) {
-      phase = 2;
-      v.playbackRate = 16;   // browsers cap playbackRate; 16 is the safe max for fast-motion feel
-    } else if (phase === 2 && t >= 576) {  // 9:36
-      phase = 3;
-      v.playbackRate = 1;
-    } else if (phase === 3 && t >= 581) {  // 9:41
+      var p = v.play();
+      if (p && p.catch) p.catch(function(){});
+    } else {
       v.pause();
-      phase = 4;
     }
-  });
-  v.addEventListener('seeked', function(){
-    // if user manually scrubs, re-evaluate phase
-    var t = v.currentTime;
-    if (t < 10) { phase = 1; v.playbackRate = 1; }
-    else if (t < 576) { phase = 2; v.playbackRate = 16; }
-    else if (t < 581) { phase = 3; v.playbackRate = 1; }
-    else { phase = 4; v.playbackRate = 1; }
-  });
-  v.addEventListener('ended', reset);
+  }
+  new MutationObserver(sync).observe(revealEl, { attributes: true, attributeFilter: ['style'] });
+  if (document.readyState === 'complete') sync();
+  else window.addEventListener('load', sync);
 })();
 </script>
 
