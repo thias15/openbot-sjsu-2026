@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curiosity, Passion, and Learning to Learn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;overflow:hidden;background:#f5f5f7;font-family:'Inter',-apple-system,sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+.deck{width:100vw;height:100vh;position:relative}
+
+/* ── SLIDES ── */
+.slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(12px) scale(.985);transition:opacity .5s ease,transform .5s ease;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 40% 0%,#fff 0%,#eff0f4 100%)}
+.slide.active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.content{position:relative;z-index:2;width:100%;max-width:1220px;padding:clamp(1.5rem,3vw,3rem)}
+
+/* ── LAYOUT ── */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center}
+.split-rev{display:grid;grid-template-columns:.95fr 1.05fr;gap:26px;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.center{text-align:center}
+
+/* ── TYPOGRAPHY ── */
+.label{text-transform:uppercase;letter-spacing:3px;font-size:.8rem;font-weight:600;color:#6e6e73;opacity:.7}
+.hero{font-weight:800;letter-spacing:-.05em;line-height:.95;font-size:clamp(3rem,6.5vw,6rem)}
+.h2{font-size:clamp(2.2rem,4.4vw,4rem);font-weight:700;letter-spacing:-.045em;line-height:1.03}
+.h3{font-size:clamp(1.5rem,2.6vw,2.4rem);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.quote{font-size:clamp(2.2rem,4.5vw,4.4rem);font-weight:700;letter-spacing:-.045em;line-height:1.1}
+.sub{font-size:1.4rem;line-height:1.58;color:#3a3a3c}
+.tiny{font-size:1.2rem;color:#6e6e73;line-height:1.55}
+.blue{color:#0071e3}
+.bold{font-weight:700}
+
+/* ── CARDS ── */
+.card{background:rgba(255,255,255,.75);border:1px solid rgba(0,0,0,.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:24px;box-shadow:0 16px 42px rgba(0,0,0,.07);padding:22px}
+a.card{display:block;color:inherit;text-decoration:none;transition:transform .15s,box-shadow .15s}
+a.card:hover{transform:translateY(-3px);box-shadow:0 22px 52px rgba(0,0,0,.13)}
+.card-lg{background:rgba(255,255,255,.75);border:1px solid rgba(0,0,0,.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:28px;box-shadow:0 20px 50px rgba(0,0,0,.08);padding:32px}
+
+/* ── IMAGES ── */
+.imgcard{overflow:hidden;border-radius:24px;background:#e0e0e5;border:1px solid rgba(0,0,0,.06);box-shadow:0 16px 42px rgba(0,0,0,.08)}
+.imgfill{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ── PHOTO BG ── */
+.photo-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.overlay-soft{position:absolute;inset:0;background:linear-gradient(170deg,rgba(245,245,247,.62) 0%,rgba(245,245,247,.93) 100%);z-index:1}
+
+/* ── BLOBS ── */
+.mesh{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.12;animation:float 16s ease-in-out infinite}
+.blob:nth-child(2){animation-duration:22s}.blob:nth-child(3){animation-duration:28s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(22px,-18px) scale(1.07)}}
+
+/* ── BARS ── */
+.bar-track{height:10px;background:rgba(0,0,0,.08);border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#0071e3,#5ac8fa);width:0%}
+
+/* ── TABLE ── */
+.cmp-table{width:100%;border-collapse:collapse;font-size:1.3rem}
+.cmp-table th{background:rgba(0,113,227,.08);color:#0071e3;font-weight:700;padding:14px 18px;text-align:left;border-bottom:2px solid rgba(0,113,227,.15)}
+.cmp-table td{padding:14px 18px;border-bottom:1px solid rgba(0,0,0,.06);color:#3a3a3c;vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+
+/* ── VIDEO ── */
+.video-wrap{position:relative;padding-top:56.25%;border-radius:20px;overflow:hidden;background:#000;box-shadow:0 20px 50px rgba(0,0,0,.14)}
+.video-wrap video{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ── ANIMATE ── */
+.reveal{opacity:0;transform:translateY(14px)}
+
+/* ── NAV ── */
+.nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:200;background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:7px 14px;border:1px solid rgba(0,0,0,.07);border-radius:999px;box-shadow:0 8px 26px rgba(0,0,0,.08);max-width:90vw}
+.nav-btn{width:30px;height:30px;border:none;border-radius:999px;background:rgba(0,0,0,.04);color:#0071e3;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;flex-shrink:0}
+.nav-btn:hover{background:rgba(0,113,227,.1)}
+.dots{display:flex;gap:5px;align-items:center}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.14);cursor:pointer;transition:.22s;flex-shrink:0}
+.dot.active{background:#0071e3;transform:scale(1.4)}
+.nav-ctr{font-size:.82rem;color:#6e6e73;min-width:36px;text-align:center;flex-shrink:0}
+.nav-sep{width:1px;height:16px;background:rgba(0,0,0,.1);flex-shrink:0}
+.anim-toggle{height:22px;padding:0 10px;border:1px solid rgba(0,113,227,.3);border-radius:999px;background:rgba(0,113,227,.06);color:#0071e3;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .18s}
+.anim-toggle:hover{background:rgba(0,113,227,.14)}
+.anim-toggle.off{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.03);color:#6e6e73}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ═══ TITLE ═══ -->
+<div class="slide active" id="s1">
+  <div class="mesh">
+    <div class="blob" style="width:400px;height:400px;top:-100px;left:-60px;background:#5ac8fa"></div>
+    <div class="blob" style="width:340px;height:340px;right:-80px;bottom:-60px;background:#34c759"></div>
+  </div>
+  <div class="content center" style="max-width:960px">
+    <div class="label reveal">SJSU CyberAI Summer Camp · June 22, 2026</div>
+    <div class="hero reveal" style="margin-bottom:20px">Curiosity, Passion,<br>and Learning to Learn</div>
+    <p class="sub reveal" style="max-width:720px;margin:0 auto">Matthias Müller · Robotics Team Lead, Apple<br><span style="font-size:.95rem;color:#6e6e73">A journey from Lego to OpenBot.</span></p>
+  </div>
+</div>
+
+
+<!-- ═══ LEGO MINDSTORMS ═══ -->
+<div class="slide" id="s2">
+  <div class="content split-rev" style="grid-template-columns:.6fr 1.4fr">
+    <div>
+      <div class="reveal"><div class="label">The Foundation</div>
+      <div class="h2">Logic meets the physical world</div>
+      <p class="sub" style="margin-top:18px">Lego Mindstorms was my first real introduction to robotics. The realisation that <em>logic could control physical things</em> changed everything.</p></div>
+    </div>
+    <div class="imgcard reveal" style="height:68vh">
+      <img class="imgfill" src="media/lego.jpg" alt="Lego Mindstorms">
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STARTING SMALL ═══ -->
+<div class="slide" id="s3">
+  <div class="content split">
+    <div>
+      <div class="reveal"><div class="label">The Foundation</div>
+      <div class="h2">Taking things apart</div>
+      <p class="sub" style="margin-top:18px">I've been fixing electronics since I was a kid — opening things up just to see how they worked. That instinct was the seed of everything.</p></div>
+    </div>
+    <div class="imgcard reveal" style="aspect-ratio:4/3;width:100%;height:auto">
+      <img class="imgfill" src="media/teardown.jpg" alt="phone teardown">
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SKILLS PROGRESSION ═══ -->
+<div class="slide" id="s4">
+  <div class="content center" style="max-width:980px">
+    <div class="label reveal">The Skills Behind the Projects</div>
+    <div class="quote reveal" style="margin-bottom:20px">Every project I built was preparing me for the next.</div>
+    <p class="sub reveal" style="max-width:720px;margin:0 auto 36px">The skills didn't come from a curriculum.<br>They compounded, one project at a time.</p>
+    <div class="reveal" style="display:flex;align-items:center;justify-content:center;gap:0;max-width:900px;margin:0 auto">
+      <div style="display:flex;align-items:center;flex:1;justify-content:center"><div style="text-align:center"><div style="margin-bottom:8px;display:flex;justify-content:center"><svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="2" width="22" height="28" rx="3" fill="#3a3a3c"/>
+            <rect x="8" y="5" width="16" height="10" rx="1.5" fill="#5ac8fa" opacity="0.7"/>
+            <rect x="10" y="7" width="12" height="1.5" rx="0.5" fill="#fff" opacity="0.6"/>
+            <rect x="10" y="10" width="8" height="1.5" rx="0.5" fill="#fff" opacity="0.4"/>
+            <circle cx="16" cy="22" r="4" fill="#ff9f0a"/>
+            <circle cx="9" cy="22" r="2" fill="#6e6e73"/>
+            <circle cx="23" cy="22" r="2" fill="#6e6e73"/>
+            <rect x="8" y="28" width="4" height="2" rx="0.5" fill="#6e6e73"/>
+            <rect x="14" y="28" width="4" height="2" rx="0.5" fill="#6e6e73"/>
+            <rect x="20" y="28" width="4" height="2" rx="0.5" fill="#6e6e73"/>
+          </svg></div><div style="font-weight:700">Lego Mindstorms</div></div></div>
+      <div style="display:flex;align-items:center;flex:1;justify-content:center"><div style="color:#0071e3;font-size:1.4rem;font-weight:300;flex-shrink:0;padding-right:8px">→</div><div style="text-align:center"><div style="margin-bottom:8px;display:flex;justify-content:center"><svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="28" height="28" rx="3" fill="#34c759" opacity="0.12"/>
+            <rect x="2" y="2" width="28" height="28" rx="3" fill="none" stroke="#34c759" stroke-width="1.5"/>
+            <rect x="9" y="9" width="14" height="14" rx="1.5" fill="#3a3a3c"/>
+            <rect x="11" y="5" width="2" height="4" rx="0.5" fill="#6e6e73"/>
+            <rect x="15" y="5" width="2" height="4" rx="0.5" fill="#6e6e73"/>
+            <rect x="19" y="5" width="2" height="4" rx="0.5" fill="#6e6e73"/>
+            <rect x="11" y="23" width="2" height="4" rx="0.5" fill="#6e6e73"/>
+            <rect x="15" y="23" width="2" height="4" rx="0.5" fill="#6e6e73"/>
+            <rect x="19" y="23" width="2" height="4" rx="0.5" fill="#6e6e73"/>
+            <rect x="5" y="11" width="4" height="2" rx="0.5" fill="#6e6e73"/>
+            <rect x="5" y="19" width="4" height="2" rx="0.5" fill="#6e6e73"/>
+            <rect x="23" y="11" width="4" height="2" rx="0.5" fill="#6e6e73"/>
+            <rect x="23" y="19" width="4" height="2" rx="0.5" fill="#6e6e73"/>
+            <circle cx="11" cy="11" r="1" fill="#fff" opacity="0.6"/>
+          </svg></div><div style="font-weight:700">Electronics / Tinkering</div></div></div>
+      <div style="display:flex;align-items:center;flex:1;justify-content:center"><div style="color:#0071e3;font-size:1.4rem;font-weight:300;flex-shrink:0;padding-right:8px">→</div><div style="text-align:center"><div style="margin-bottom:8px;display:flex;justify-content:center"><svg width="52" height="32" viewBox="0 0 32 20" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="6" width="15" height="8" rx="3" fill="#6e6e73"/>
+            <rect x="16" y="7.5" width="10" height="5" rx="2" fill="#3a3a3c"/>
+            <polygon points="26,10 32,7.5 32,12.5" fill="#ff9f0a"/>
+            <circle cx="19.5" cy="10" r="1.5" fill="#ff3b30"/>
+          </svg></div><div style="font-weight:700">Soldering</div></div></div>
+      <div style="display:flex;align-items:center;flex:1;justify-content:center"><div style="color:#0071e3;font-size:1.4rem;font-weight:300;flex-shrink:0;padding-right:8px">→</div><div style="text-align:center"><div style="margin-bottom:8px;display:flex;justify-content:center"><svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="18" width="26" height="12" rx="2" fill="#3a3a3c"/>
+            <rect x="7" y="22" width="18" height="2.5" rx="1" fill="#e5e5ea"/>
+            <rect x="3" y="9" width="26" height="3.5" rx="1.5" fill="#6e6e73"/>
+            <rect x="14.5" y="12.5" width="3" height="6" rx="1" fill="#6e6e73"/>
+            <polygon points="13.5,18.5 18.5,18.5 16,22" fill="#ff9f0a"/>
+          </svg></div><div style="font-weight:700">3D Printing</div></div></div>
+      <div style="display:flex;align-items:center;flex:1;justify-content:center"><div style="color:#0071e3;font-size:1.4rem;font-weight:300;flex-shrink:0;padding-right:8px">→</div><div style="text-align:center"><div style="margin-bottom:8px;display:flex;justify-content:center"><svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <line x1="14" y1="14" x2="5"  y2="5"  stroke="#6e6e73" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="18" y1="14" x2="27" y2="5"  stroke="#6e6e73" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="18" y1="18" x2="27" y2="27" stroke="#6e6e73" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="14" y1="18" x2="5"  y2="27" stroke="#6e6e73" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="12" y="12" width="8" height="8" rx="2" fill="#3a3a3c"/>
+            <ellipse cx="5"  cy="5"  rx="4.5" ry="1.5" fill="#0071e3" opacity="0.75" transform="rotate(-45 5 5)"/>
+            <ellipse cx="27" cy="5"  rx="4.5" ry="1.5" fill="#0071e3" opacity="0.75" transform="rotate(45 27 5)"/>
+            <ellipse cx="27" cy="27" rx="4.5" ry="1.5" fill="#0071e3" opacity="0.75" transform="rotate(-45 27 27)"/>
+            <ellipse cx="5"  cy="27" rx="4.5" ry="1.5" fill="#0071e3" opacity="0.75" transform="rotate(45 5 27)"/>
+          </svg></div><div style="font-weight:700">Custom Drones</div></div></div>
+    </div>
+  </div>
+</div>
+<!-- ═══ EXPECTED PATH ═══ -->
+<div class="slide" id="s5">
+  <div class="content center" style="max-width:960px">
+    <div class="label reveal">The Expected Path</div>
+    <div class="h2 reveal" style="margin-bottom:36px">Meanwhile, I followed the expected path.</div>
+    <div class="grid3" style="margin-bottom:32px">
+      <div class="card reveal" style="text-align:center;padding:32px 24px;border-top:4px solid #0071e3">
+        <div style="font-size:2.2rem;margin-bottom:14px">🎓</div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:8px">B.Sc. Electrical Engineering</div>
+        <div class="tiny" style="color:#3a3a3c">The degree everyone said to get.</div>
+      </div>
+      <div class="card reveal" style="text-align:center;padding:32px 24px;border-top:4px solid #34c759">
+        <div style="font-size:2.2rem;margin-bottom:14px">💍</div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:8px">Got Married</div>
+        <div class="tiny" style="color:#3a3a3c">The milestone everyone expected next.</div>
+      </div>
+      <div class="card reveal" style="text-align:center;padding:32px 24px;border-top:4px solid #ff9f0a">
+        <div style="font-size:2.2rem;margin-bottom:14px">💼</div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:8px">Started Working in Industry</div>
+        <div class="tiny" style="color:#3a3a3c">A real job at BMW. Stable. Predictable.</div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:22px;text-align:center;font-size:1.7rem;font-weight:700;color:#1d1d1f">Nothing wrong with that.<br>But the curiosity didn't stop.<br>The side projects were just getting started.</p>
+  </div>
+</div>
+
+<!-- ═══ BMW ═══ -->
+<div class="slide" id="s6">
+  <div class="content split" style="grid-template-columns:1.1fr .9fr;gap:32px">
+    <div class="imgcard reveal" style="aspect-ratio:3/2;width:100%;height:auto">
+      <img class="imgfill" src="media/bmw_i8.webp" alt="BMW i8 prototype">
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:18px">
+      <div class="label reveal">BMW</div>
+      <div class="h2 reveal">The dream job.</div>
+      <div class="card reveal" style="border-left:4px solid #34c759;padding:18px 20px">
+        <div class="bold" style="color:#34c759;margin-bottom:8px;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px">The Work</div>
+        <div class="sub">Developing mild-hybrid alternators — now in most cars on the road. Test driving early prototypes like the BMW i8.</div>
+      </div>
+      <div class="card reveal" style="border-left:4px solid #ff9f0a;padding:18px 20px">
+        <div class="bold" style="color:#ff9f0a;margin-bottom:8px;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px">The Catch</div>
+        <div class="sub">But the basement called every weekend.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STARTING OVER ═══ -->
+<div class="slide" id="s7">
+  <div class="content">
+    <div class="label reveal" style="margin-bottom:18px">Starting Over</div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1.15fr;gap:0px 48px;align-items:start;margin-bottom:18px">
+      <div style="grid-column:1">
+        <div class="h2" style="margin-top:-40px;margin-bottom:12px">I quit.</div>
+        <p class="sub" style="margin:0">BMW felt like the void. So I left — driven by instinct, not comfort. Managing suppliers wasn't why I studied engineering.</p>
+      </div>
+      <div style="grid-column:2;margin-top:-8px">
+        <div style="background:#fff3f3;border:1.5px solid #ff3b30;border-radius:16px;padding:14px 18px">
+          <div style="font-size:1.15rem;font-weight:700;color:#ff3b30;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">Decision 1</div>
+          <div class="bold" style="font-size:1.4rem;margin-bottom:3px">Left BMW</div>
+          <div style="font-size:1.4rem;color:#3a3a3c">Desiring hands-on work over project management.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1.15fr;gap:0px 48px;align-items:start;margin-bottom:18px">
+      <div style="grid-column:1">
+        <div class="h2" style="margin-top:0;margin-bottom:12px">Then I started over.</div>
+      </div>
+      <div style="grid-column:2">
+        <div style="text-align:center;padding:4px 0;font-size:1.5rem;font-weight:700;color:#6e6e73">↓</div>
+        <div style="background:#f2f7ff;border:1.5px solid #5ac8fa;border-radius:16px;padding:14px 18px">
+          <div style="font-size:1.15rem;font-weight:700;color:#5ac8fa;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">Decision 2</div>
+          <div class="bold" style="font-size:1.4rem;margin-bottom:3px">MS in EE Communications</div>
+          <div style="font-size:1.4rem;color:#3a3a3c">Theoretical. Not applied. Still not quite right.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1.15fr;gap:0px 48px;align-items:start">
+      <div style="grid-column:1">
+        <p class="sub" style="margin:0">Started a Master's in Electrical Engineering, focused on communications theory. But it was not a great fit, and the next decision only took a few months.</p>
+      </div>
+      <div style="grid-column:2">
+        <div style="text-align:center;padding:4px 0;font-size:1.5rem;font-weight:700;color:#6e6e73">↓</div>
+        <div style="background:#f2fff5;border:1.5px solid #34c759;border-radius:16px;padding:14px 18px">
+          <div style="font-size:1.15rem;font-weight:700;color:#34c759;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">Decision 3</div>
+          <div class="bold" style="font-size:1.4rem;margin-bottom:3px">Changed Topic &amp; Adviser</div>
+          <div style="font-size:1.4rem;color:#3a3a3c">Computer Vision. Building. Following the passion.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ CV FOR DRONES ═══ -->
+<div class="slide" id="s8">
+  <div class="content center" style="max-width:1100px">
+    <div class="reveal"><div class="label">PhD</div>
+    <div class="h2" style="margin-bottom:18px">Computer vision for drones.</div>
+    <p class="sub" style="max-width:760px;margin:0 auto 28px">Object detection, tracking, drone autonomy.<br>Hobby and research were converging on the same thing: <strong>getting algorithms to work on real hardware.</strong></p></div>
+    <div class="reveal imgcard" style="max-width:780px;margin:0 auto">
+      <img src="media/drone_research.jpg" alt="PAT drone research" style="width:100%;display:block">
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RC TRUCK — FIRST AUTONOMOUS DRIVING ═══ -->
+<div class="slide" id="s9">
+  <div class="content split-rev" style="grid-template-columns:.9fr .7fr;gap:100px;position:relative">
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:18px">
+      <div class="reveal"><div class="label">First autonomous driving project</div>
+      <div class="h2">A 1:5 scale self-driving RC truck.</div>
+      <p class="sub" style="margin-top:4px">Built during a research internship — retrofit a 1:5 scale RC truck with cameras and sensors, then teach it to drive itself.</p>
+      <p class="sub" style="margin-top:14px"><strong>This is where everything starts.</strong></p></div>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-rows:1fr 1fr;gap:16px;height:70vh">
+      <div class="imgcard">
+        <img class="imgfill" src="media/rc_truck_exterior.jpg" alt="RC truck exterior" style="object-position:center 40%">
+      </div>
+      <div class="imgcard">
+        <img class="imgfill" src="media/rc_truck_electronics.jpg" alt="RC truck electronics">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CIL ICRA 2018 ═══ -->
+<div class="slide" id="s10">
+  <div class="content center" style="max-width:1200px">
+    <div class="label reveal">ICRA 2018</div>
+    <div class="h2 reveal" style="margin-bottom:24px">Conditional Imitation Learning</div>
+
+    <div class="reveal" style="max-width:980px;margin:0 auto 22px">
+      <img src="media/cil_diagram.png" alt="CIL architecture: RGB image + speed measurement + planner command → neural network → steering and pedals" style="width:100%;height:auto;display:block;border-radius:12px">
+    </div>
+    <p class="reveal" style="text-align:center;font-size:1.3rem;font-weight:700;color:#0071e3;margin:0">We taught this truck to drive using human demonstrations.</p>
+  </div>
+</div>
+
+<!-- ═══ COMPARISON → OPENBOT REVEAL ═══ -->
+<style>
+  @keyframes priceCrash {
+    0%   { transform: scale(0.2); opacity: 0; filter: blur(10px); }
+    55%  { transform: scale(1.22); opacity: 1; filter: blur(0); text-shadow: 0 0 40px rgba(52,199,89,.55), 0 0 8px rgba(52,199,89,.4); }
+    75%  { transform: scale(0.95); }
+    100% { transform: scale(1);     text-shadow: 0 0 0 rgba(52,199,89,0); }
+  }
+  .slide.active #ob-price.pop { animation: priceCrash 0.95s cubic-bezier(.34, 1.56, .64, 1) both; }
+  .cmp-cell{ text-align:center; transition: opacity .6s ease; }
+  .slide.active .cmp-row.is-dim .cmp-cell { opacity: .35; }
+</style>
+<script>
+(function(){
+  var slideEl = document.getElementById('s11') || document.querySelector('.slide[id]:nth-of-type(11)');
+  // find the OpenBot reveal block (contains #ob-price). when it's revealed, add is-dim to cmp-row.
+  // Use MutationObserver on the slide watching for inline opacity changes on the parent of #ob-price.
+  function setup(){
+    var price = document.getElementById('ob-price');
+    var row = document.getElementById('cmp-row');
+    if (!price || !row) return;
+    var revealParent = price.closest('.reveal') || price.parentElement;
+    function popPrice(){
+      // remove + force reflow + add to restart the animation on revisit
+      price.classList.remove('pop');
+      void price.offsetWidth;
+      price.classList.add('pop');
+    }
+    var obs = new MutationObserver(function(){
+      var op = revealParent.style.opacity;
+      if (op === '1') {
+        row.classList.add('is-dim');
+        popPrice();
+      } else {
+        row.classList.remove('is-dim');
+        price.classList.remove('pop');
+      }
+    });
+    obs.observe(revealParent, { attributes: true, attributeFilter: ['style'] });
+    if (revealParent.style.opacity === '1') {
+      row.classList.add('is-dim');
+      popPrice();
+    }
+  }
+  if (document.readyState === 'complete') setup();
+  else window.addEventListener('load', setup);
+})();
+</script>
+<div class="slide" id="s11">
+  <div class="content center" style="max-width:1200px">
+    <div class="label reveal">Existing wheeled robots</div>
+    <div class="h2 reveal" style="margin-bottom:28px">All too expensive to scale.</div>
+    <div class="reveal cmp-row" id="cmp-row" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1000px;margin:0 auto 36px">
+      <div class="cmp-cell"><div class="imgcard" style="background:#fff;padding:8px;border-radius:10px;height:120px;display:flex;align-items:center;justify-content:center"><img src="media/cmp/f1tenth.png" alt="F1/10" style="max-height:100%;max-width:100%;object-fit:contain"></div><div style="margin-top:8px;font-size:.9rem;color:#6e6e73;font-weight:600">F1/10 · $3,600</div></div>
+      <div class="cmp-cell"><div class="imgcard" style="background:#fff;padding:8px;border-radius:10px;height:120px;display:flex;align-items:center;justify-content:center"><img src="media/cmp/mushr.png" alt="MuSHR" style="max-height:100%;max-width:100%;object-fit:contain"></div><div style="margin-top:8px;font-size:.9rem;color:#6e6e73;font-weight:600">MuSHR · $900</div></div>
+      <div class="cmp-cell"><div class="imgcard" style="background:#fff;padding:8px;border-radius:10px;height:120px;display:flex;align-items:center;justify-content:center"><img src="media/cmp/robomaster.png" alt="DJI Robomaster" style="max-height:100%;max-width:100%;object-fit:contain"></div><div style="margin-top:8px;font-size:.9rem;color:#6e6e73;font-weight:600">DJI Robomaster · $500</div></div>
+      <div class="cmp-cell"><div class="imgcard" style="background:#fff;padding:8px;border-radius:10px;height:120px;display:flex;align-items:center;justify-content:center"><img src="media/cmp/duckiebot.png" alt="Duckiebot" style="max-height:100%;max-width:100%;object-fit:contain"></div><div style="margin-top:8px;font-size:.9rem;color:#6e6e73;font-weight:600">Duckiebot · $280</div></div>
+    </div>
+    <div class="reveal" style="display:flex;align-items:center;justify-content:center;gap:36px;max-width:1000px;margin:0 auto">
+      <div style="text-align:center">
+        <div class="imgcard" style="width:240px"><img src="media/openbot_in_hand.jpg" alt="OpenBot" style="width:100%;display:block"></div>
+        <div style="margin-top:10px;font-size:1.1rem;font-weight:700">OpenBot</div>
+      </div>
+      <div style="text-align:left">
+        <div style="font-size:1.2rem;color:#6e6e73;font-weight:500;margin-bottom:6px">Smartphone brain + off-the-shelf parts</div>
+        <div id="ob-price" style="font-size:6rem;font-weight:800;color:#34c759;line-height:1;letter-spacing:-.04em;display:inline-block">$50</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MECHANICAL ═══ -->
+<div class="slide" id="s12">
+  <div class="content center" style="max-width:1100px">
+    <div class="reveal"><div class="label">Mechanical design</div>
+    <div class="h2" style="margin-bottom:8px">3D-printed body.</div>
+    <p class="sub" style="margin-bottom:24px;font-size:1rem;color:#6e6e73">Prints in less than a day · $5 in PLA</p></div>
+    <div class="reveal" style="max-width:760px;margin:0 auto">
+      <img src="media/hw/mechanical.gif" alt="OpenBot mechanical CAD" style="width:100%;height:auto;display:block;border-radius:12px">
+    </div>
+  </div>
+</div>
+
+<style>
+  .elec-grid {
+    display: grid;
+    grid-template-columns: 1fr 0fr;
+    gap: 0;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    transition: grid-template-columns 0.7s ease, gap 0.7s ease;
+  }
+  .elec-grid:has(.elec-pcb[style*="opacity: 1"]) {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 28px;
+  }
+  .elec-wiring img { transition: max-width 0.7s ease; max-width: 800px; display: block; margin: 0 auto; width:100%; height:auto; }
+  .elec-grid:has(.elec-pcb[style*="opacity: 1"]) .elec-wiring img { max-width: 100%; }
+  .elec-pcb { overflow: hidden; min-width: 0; }
+  .elec-pcb img { width:100%; height:auto; display:block; border-radius:10px; background:#fff; padding:8px; }
+</style>
+<!-- ═══ ELECTRICAL + PCB ═══ -->
+<div class="slide" id="s13">
+  <div class="content center" style="max-width:1240px">
+    <div class="label reveal">Electrical design</div>
+    <div class="h2 reveal" style="margin-bottom:24px">Arduino · motor driver · batteries · sensors.</div>
+    <div class="elec-grid">
+      <div class="elec-wiring reveal">
+        <div style="font-size:.85rem;font-weight:600;color:#6e6e73;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;text-align:center">Wiring</div>
+        <img src="media/hw/electrical_wiring.png" alt="Wiring diagram">
+      </div>
+      <div class="elec-pcb reveal">
+        <div style="font-size:.85rem;font-weight:600;color:#6e6e73;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;text-align:center">Optional PCB</div>
+        <img src="media/hw/pcb_a.png" alt="OpenBot PCB">
+        <p style="margin:14px 0 0;font-size:.95rem;color:#3a3a3c;line-height:1.5;text-align:center">A PCB collapses the wire mess into <strong>one board you plug into</strong> — same circuit, no soldering jungle.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ASSEMBLY ═══ -->
+<div class="slide" id="s14">
+  <div class="content center" style="max-width:1180px">
+    <div class="reveal"><div class="label">Hardware · Assembly</div>
+    <div class="h2" style="margin-bottom:14px">Build it in 15 minutes.</div>
+    <p class="sub" style="margin-bottom:24px;max-width:740px;margin-left:auto;margin-right:auto;font-size:1.05rem">Off-the-shelf electronics · 3D-printed body · a screwdriver.</p></div>
+    <div class="reveal" style="max-width:960px;margin:0 auto">
+      <img src="media/hw/assembly_2.jpg" alt="All the parts laid out" style="width:100%;max-height:54vh;object-fit:contain;display:block;border-radius:12px;background:#f5f5f7">
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOM ═══ -->
+<div class="slide" id="s15">
+  <div class="content center" style="max-width:1080px">
+    <div class="label reveal">Bill of materials</div>
+    <div class="h2 reveal" style="margin-bottom:24px">$50. That's a robot.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:780px;margin:0 auto 28px;font-size:1.05rem">
+      <div style="background:#fff;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between"><span>3D-printed body</span><strong>$5</strong></div>
+      <div style="background:#fff;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between"><span>Arduino Nano</span><strong>$8</strong></div>
+      <div style="background:#fff;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between"><span>4 motors + tires</span><strong>$14</strong></div>
+      <div style="background:#fff;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between"><span>Motor driver</span><strong>$3</strong></div>
+      <div style="background:#fff;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between"><span>3× 18650 batteries</span><strong>$15</strong></div>
+      <div style="background:#fff;padding:14px 18px;border-radius:10px;border:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between"><span>Sonar + wheel encoders</span><strong>$5</strong></div>
+    </div>
+    <div class="reveal">
+      <div style="display:inline-flex;align-items:center;gap:18px;background:#f2fff5;border:2px solid #34c759;padding:14px 28px;border-radius:14px">
+        <div style="font-size:.85rem;font-weight:700;color:#34c759;text-transform:uppercase;letter-spacing:1px">Total</div>
+        <div style="font-size:2.4rem;font-weight:800;color:#34c759;line-height:1">$50</div>
+        <div style="font-size:.95rem;color:#3a3a3c;border-left:1px solid rgba(52,199,89,.4);padding-left:18px">($30 in bulk)</div>
+      </div>
+      <p style="margin-top:24px;font-size:1.05rem;color:#3a3a3c;font-style:italic">…and the brain you already have in your pocket.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHONE AS BRAIN ═══ -->
+<div class="slide" id="s16">
+  <div class="content center" style="max-width:1200px">
+    <div class="label reveal">The brain</div>
+    <div class="h2 reveal" style="margin-bottom:40px">Your phone is a robot computer.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1080px;margin:0 auto 22px">
+      <div style="background:#fff;padding:32px 20px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)"><div style="font-size:3.2rem;margin-bottom:10px">📷</div><div style="font-weight:800;font-size:1.15rem">HD camera</div></div>
+      <div style="background:#fff;padding:32px 20px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)"><div style="font-size:3.2rem;margin-bottom:10px">🧠</div><div style="font-weight:800;font-size:1.15rem">CPU + GPU + AI chip</div></div>
+      <div style="background:#fff;padding:32px 20px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)"><div style="font-size:3.2rem;margin-bottom:10px">🧭</div><div style="font-weight:800;font-size:1.15rem">IMU + GPS</div></div>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1080px;margin:0 auto">
+      <div style="background:#fff;padding:32px 20px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)"><div style="font-size:3.2rem;margin-bottom:10px">📶</div><div style="font-weight:800;font-size:1.15rem">WiFi · BT · 4G/5G</div></div>
+      <div style="background:#fff;padding:32px 20px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)"><div style="font-size:3.2rem;margin-bottom:10px">🔊 🎤 🖥</div><div style="font-weight:800;font-size:1.15rem">Speaker + mic + display</div></div>
+      <div style="background:#fff;padding:32px 20px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)"><div style="font-size:3.2rem;margin-bottom:10px">🔋</div><div style="font-weight:800;font-size:1.15rem">Battery + charging</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SOFTWARE STACK ═══ -->
+<div class="slide" id="s17">
+  <div class="content center" style="max-width:1280px">
+    <div class="label reveal">Software stack</div>
+    <div class="h2 reveal" style="margin-bottom:36px">Smartphone runs the AI.<br>Microcontroller drives the motors.</div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:22px;align-items:center;max-width:1220px;margin:0 auto">
+
+      <!-- Smartphone (Android app) -->
+      <div class="reveal" style="background:linear-gradient(135deg,#0071e3,#5ac8fa);color:#fff;padding:28px 22px;border-radius:16px;box-shadow:0 6px 18px rgba(0,113,227,.25)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+          <span style="font-size:2.2rem">📱</span>
+          <span style="font-size:1.45rem;font-weight:800">Smartphone · Android app</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:1.05rem">
+          <div style="background:rgba(255,255,255,.18);padding:12px 14px;border-radius:9px">📷 Camera + IMU + GPS</div>
+          <div style="background:rgba(255,255,255,.18);padding:12px 14px;border-radius:9px">🧠 Neural net (TF Lite)</div>
+          <div style="background:rgba(255,255,255,.18);padding:12px 14px;border-radius:9px">📊 Sensor logger</div>
+          <div style="background:rgba(255,255,255,.18);padding:12px 14px;border-radius:9px">🔊 Voice + display</div>
+        </div>
+      </div>
+
+      <!-- USB or Bluetooth link -->
+      <div class="reveal" style="text-align:center;color:#6e6e73">
+        <div style="font-size:2.2rem;font-weight:700;color:#0071e3">⇄</div>
+        <div style="font-size:.85rem;letter-spacing:2px;margin-top:6px;font-weight:700">USB</div>
+        <div style="font-size:.78rem;color:#6e6e73;margin:3px 0">— or —</div>
+        <div style="font-size:.85rem;letter-spacing:2px;font-weight:700">BLUETOOTH</div>
+      </div>
+
+      <!-- Robot body (microcontroller) -->
+      <div class="reveal" style="background:#1c1c1e;color:#fff;padding:28px 22px;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.2)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+          <span style="font-size:2.2rem">⚙️</span>
+          <span style="font-size:1.45rem;font-weight:800">Robot body · MCU</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:1.05rem">
+          <div style="background:rgba(255,255,255,.1);padding:12px 14px;border-radius:9px">🔧 PWM motor control</div>
+          <div style="background:rgba(255,255,255,.1);padding:12px 14px;border-radius:9px">🛞 Wheel encoders</div>
+          <div style="background:rgba(255,255,255,.1);padding:12px 14px;border-radius:9px">📡 Sonar</div>
+          <div style="background:rgba(255,255,255,.1);padding:12px 14px;border-radius:9px">🔋 Battery monitor</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ APIS ═══ -->
+<div class="slide" id="s18">
+  <div class="content center" style="max-width:1320px">
+    <div class="label reveal">Beyond the phone</div>
+    <div class="h2 reveal" style="margin-bottom:30px">Three ways to drive and train it.</div>
+    <div style="display:flex;justify-content:center;align-items:flex-end;gap:32px;max-width:1280px;margin:0 auto;flex-wrap:nowrap">
+      <div class="reveal" style="text-align:center;flex:0 0 auto">
+        <img src="media/hw/api_python_1.png" alt="Python SDK" style="height:280px;width:auto;display:block;margin:0 auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.08)">
+        <div style="margin-top:14px;font-weight:700;font-size:1.1rem">🐍 Python SDK</div>
+        <div style="font-size:.9rem;color:#6e6e73;margin-top:2px">Control the robot from Python</div>
+      </div>
+      <div class="reveal" style="text-align:center;flex:0 0 auto">
+        <img src="media/hw/api_web.gif" alt="Policy training web app" style="height:280px;width:auto;display:block;margin:0 auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.08)">
+        <div style="margin-top:14px;font-weight:700;font-size:1.1rem">🌐 Policy training app</div>
+        <div style="font-size:.9rem;color:#6e6e73;margin-top:2px">Train driving policies in-browser</div>
+      </div>
+      <div class="reveal" style="text-align:center;flex:0 0 auto">
+        <img src="media/hw/api_nodejs.png" alt="Live teleop web app" style="height:280px;width:auto;display:block;margin:0 auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.08)">
+        <div style="margin-top:14px;font-weight:700;font-size:1.1rem">📡 Live teleop</div>
+        <div style="font-size:.9rem;color:#6e6e73;margin-top:2px">Web app · live video · Node.js backend</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PERSON FOLLOWING (merged) ═══ -->
+<div class="slide" id="s19">
+  <div class="content center" style="max-width:1240px">
+    <div class="label reveal">AI App #1</div>
+    <div class="h2 reveal" style="margin-bottom:24px">Person following.</div>
+
+    <!-- Pipeline + control loop merged into one reveal -->
+    <div class="reveal">
+    <div style="display:grid;grid-template-columns:1fr auto 1.1fr auto 1fr;gap:14px;align-items:center;max-width:1180px;margin:0 auto 28px">
+      <div style="text-align:center"><div style="font-size:3.4rem">📷</div><div style="margin-top:4px;font-size:.95rem;font-weight:700">Camera frame</div></div>
+      <div style="font-size:2.2rem;color:#0071e3;font-weight:300">→</div>
+      <div style="background:linear-gradient(135deg,#0071e3,#5ac8fa);color:#fff;padding:20px 16px;border-radius:14px;text-align:center;box-shadow:0 6px 18px rgba(0,113,227,.25)">
+        <div style="font-size:1.1rem;font-weight:800;margin-bottom:6px">SSD + MobileNet</div>
+        <div style="font-size:.85rem;opacity:.95;line-height:1.4">tiny detector designed for phones<br>trained on COCO · 90 classes</div>
+      </div>
+      <div style="font-size:2.2rem;color:#0071e3;font-weight:300">→</div>
+      <div style="text-align:center"><div style="font-size:3.4rem">🎯</div><div style="margin-top:4px;font-size:.95rem;font-weight:700">Bounding box<br>around the person</div></div>
+    </div>
+
+    <!-- How the control loop works -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1080px;margin:0 auto 22px;text-align:left">
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:18px 20px">
+        <div style="font-size:.85rem;font-weight:700;color:#6e6e73;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Pick the target</div>
+        <div style="font-size:1rem;color:#3a3a3c;line-height:1.5">Only consider <code>person</code> detections above 50% confidence. If there are multiple people, follow the one with the highest score.</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:18px 20px">
+        <div style="font-size:.85rem;font-weight:700;color:#6e6e73;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Visual servoing</div>
+        <div style="font-size:1rem;color:#3a3a3c;line-height:1.5">Steer so the <strong>center of the bounding box</strong> stays in the middle of the frame. Speed up when the box gets small, slow down when it gets big.</div>
+      </div>
+    </div>
+    </div>
+
+    <p class="reveal" style="font-size:1.05rem;color:#3a3a3c;margin:0">Runs in real time on any modern smartphone — quantized model, CPU-only, no cloud.</p>
+  </div>
+</div><!-- ═══ AUTONOMOUS NAV INTRO ═══ -->
+<div class="slide" id="s20">
+  <div class="content center" style="max-width:1180px">
+    <div class="label reveal">AI App #2</div>
+    <div class="h2 reveal" style="margin-bottom:24px">Autonomous navigation.</div>
+    <p class="sub reveal" style="max-width:780px;margin:0 auto 28px;font-size:1.1rem">Similar to Tesla Autopilot — an end-to-end neural network that drives the car autonomously.</p>
+    <p class="reveal" style="font-size:1.6rem;font-weight:700;color:#0071e3;margin:0">Remember the CIL diagram from earlier? We took that — and shrank it to fit on a phone.</p>
+  </div>
+</div>
+
+<!-- ═══ AUTONOMOUS NAV · MODEL ═══ -->
+<div class="slide" id="s21">
+  <div class="content center" style="max-width:1180px">
+    <div class="label reveal">Autonomous nav · the model</div>
+    <div class="h2 reveal" style="margin-bottom:36px">Same accuracy as the big nets.<br>7× smaller.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:980px;margin:0 auto">
+      <div style="background:#fff;padding:22px 18px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08)">
+        <div style="font-size:.82rem;color:#6e6e73;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">PilotNet · 9.6M params</div>
+        <div style="font-size:1.7rem;font-weight:800;line-height:1.1">92% · 83%</div>
+        <div style="font-size:.85rem;color:#6e6e73;margin-top:4px">distance · success</div>
+      </div>
+      <div style="background:#fff;padding:22px 18px;border-radius:14px;text-align:center;border:1px solid rgba(0,0,0,.08)">
+        <div style="font-size:.82rem;color:#6e6e73;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">CIL · 10.7M params</div>
+        <div style="font-size:1.7rem;font-weight:800;line-height:1.1">94% · 89%</div>
+        <div style="font-size:.85rem;color:#6e6e73;margin-top:4px">distance · success</div>
+      </div>
+      <div style="background:#f2fff5;padding:22px 18px;border-radius:14px;text-align:center;border:2px solid #34c759">
+        <div style="font-size:.82rem;color:#34c759;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Ours · 1.3M params</div>
+        <div style="font-size:1.7rem;font-weight:800;color:#34c759;line-height:1.1">94% · 89%</div>
+        <div style="font-size:.85rem;color:#3a3a3c;margin-top:4px">distance · success</div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:28px;font-size:1.1rem;color:#3a3a3c">⚡ Runs faster than real-time on pretty much any modern phone.</p>
+  </div>
+</div>
+
+<!-- ═══ COFFEE RACER ═══ -->
+<div class="slide" id="s22">
+  <div class="content center" style="max-width:1100px">
+    <div class="label reveal">Coffee Racer</div>
+    <div class="h2 reveal" style="margin-bottom:20px">Autonomous coffee delivery.</div>
+    <div class="reveal" style="max-width:760px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.12)">
+      <video controls preload="metadata" muted style="width:100%;height:auto;display:block">
+        <source src="media/openbot_coffee_delivery.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- ═══ FLEET SCALE ═══ -->
+<div class="slide" id="s23">
+  <div class="content center" style="max-width:1180px">
+    <div class="reveal"><div class="label">OpenBot-Fleet · ICRA 2024</div>
+    <div class="h2" style="margin-bottom:8px">From 1 robot to 72 homes.</div>
+    <p class="sub" style="margin-bottom:22px;font-size:1rem;color:#6e6e73">If we want robots to work in <em>your</em> house, we can't train in one lab.</p></div>
+    <div class="reveal" style="max-width:760px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.12)">
+      <video controls preload="metadata" muted style="width:100%;height:auto;display:block">
+        <source src="media/openbot_fleet_video.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FLEET HW V2 ═══ -->
+<div class="slide" id="s24">
+  <div class="content center" style="max-width:1100px">
+    <div class="reveal"><div class="label">Hardware V2</div>
+    <div class="h2" style="margin-bottom:24px">Injection-molded · plug-and-play.</div>
+    <p class="sub" style="max-width:760px;margin:0 auto 24px;font-size:1.05rem">DIY was great for makers. 72 robots need real production · same cost, more durable.</p></div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1000px;margin:0 auto">
+      <div class="imgcard"><img src="media/openbot_v2_product.jpg" alt="OpenBot V2 product" style="width:100%;display:block"></div>
+      <div class="imgcard"><img src="media/openbot_fleet_photo.jpg" alt="OpenBot fleet" style="width:100%;display:block"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CLOUD LOOP ═══ -->
+<div class="slide" id="s25">
+  <div class="content center" style="max-width:1240px">
+    <div class="label reveal">The cloud loop</div>
+    <div class="h2 reveal" style="margin-bottom:32px">Robots collect data.<br>Policy updates in the cloud.<br>Fleet gets the new policy.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:18px;align-items:center;max-width:1180px;margin:0 auto 24px">
+
+      <div style="background:linear-gradient(135deg,#0071e3,#5ac8fa);color:#fff;padding:26px 18px;border-radius:14px;text-align:center;box-shadow:0 6px 18px rgba(0,113,227,.22)">
+        <div style="font-size:3rem;line-height:1">🤖</div>
+        <div style="font-size:1.1rem;font-weight:800;margin-top:8px">72 robots</div>
+        <div style="font-size:.85rem;opacity:.92">in real homes</div>
+      </div>
+
+      <div style="font-size:2.4rem;color:#0071e3;line-height:1;font-weight:300">⇄</div>
+
+      <div style="background:#fff;border:2px solid #0071e3;padding:26px 18px;border-radius:14px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.06)">
+        <div style="font-size:3rem;line-height:1">☁️</div>
+        <div style="font-size:1.1rem;font-weight:800;margin-top:8px">Firebase</div>
+        <div style="font-size:.85rem;color:#6e6e73">storage · sync</div>
+      </div>
+
+      <div style="font-size:2.4rem;color:#0071e3;line-height:1;font-weight:300">⇄</div>
+
+      <div style="background:#1c1c1e;color:#fff;padding:26px 18px;border-radius:14px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.2)">
+        <div style="font-size:3rem;line-height:1">🧠</div>
+        <div style="font-size:1.1rem;font-weight:800;margin-top:8px">RL training</div>
+        <div style="font-size:.85rem;opacity:.85">TF-Agents · SAC</div>
+      </div>
+
+    </div>
+
+    <p class="reveal" style="font-size:1rem;color:#3a3a3c">15,642 recordings · 1M+ frames · self-supervised U-Net floor segmentation.</p>
+  </div>
+</div>
+
+<!-- ═══ FLEET RESULTS ═══ -->
+<div class="slide" id="s26">
+  <div class="content center" style="max-width:1200px">
+    <div class="label reveal">Fleet results</div>
+    <div class="h2 reveal" style="margin-bottom:24px">Diversity beats data quantity.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1100px;margin:0 auto 24px">
+      <div style="background:#fff;padding:22px;border-radius:14px;border:1px solid rgba(0,0,0,.08)">
+        <div style="font-size:.85rem;color:#6e6e73;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Zero-shot · unseen homes</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span>Best baseline</span><strong style="font-size:1.4rem">15%</strong></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><span style="color:#34c759">Ours</span><strong style="color:#34c759;font-size:1.6rem">60%</strong></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="color:#34c759">+ &lt;200 finetune episodes</span><strong style="color:#34c759;font-size:1.8rem">82.5%</strong></div>
+      </div>
+      <div style="background:#fff;padding:22px;border-radius:14px;border:1px solid rgba(0,0,0,.08)">
+        <div style="font-size:.85rem;color:#6e6e73;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Diversity ablation · success rate</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">1 env<strong style="font-size:1.4rem">50%</strong></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">6 envs<strong style="font-size:1.4rem">70%</strong></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline">72 envs<strong style="color:#34c759;font-size:1.8rem">85%</strong></div>
+      </div>
+    </div>
+    <p class="reveal" style="font-size:1.15rem;color:#3a3a3c;max-width:880px;margin:0 auto">Same data per env. 1 home → 50%. 72 homes → 85%. <strong>Where the data comes from matters more than how much.</strong></p>
+  </div>
+</div>
+
+<!-- ═══ IMPACT · PUBLICATIONS ═══ -->
+<div class="slide" id="s27">
+  <div class="content center" style="max-width:1240px">
+    <div class="label reveal">Impact</div>
+    <div class="h2 reveal" style="margin-bottom:24px">Side projects → published research.</div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:1140px;margin:0 auto 18px">
+
+      <a href="https://arxiv.org/abs/1710.02410" target="_blank" rel="noopener" style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;flex-direction:column;text-align:left">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+          <span style="font-size:.85rem;font-weight:700;color:#0071e3;letter-spacing:1.5px;text-transform:uppercase">ICRA 2018</span>
+          <span style="font-size:1.4rem;font-weight:800;color:#34c759">1,669 <span style="font-size:.8rem;color:#6e6e73;font-weight:600">citations</span></span>
+        </div>
+        <div style="font-size:1.05rem;font-weight:700;line-height:1.3;margin-bottom:6px">End-to-end Driving via Conditional Imitation Learning</div>
+        <div style="font-size:.85rem;color:#6e6e73">Codevilla, <strong>Müller</strong>, López, Koltun, Dosovitskiy</div>
+      </a>
+
+      <a href="https://proceedings.mlr.press/v87/mueller18a.html" target="_blank" rel="noopener" style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;flex-direction:column;text-align:left">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+          <span style="font-size:.85rem;font-weight:700;color:#0071e3;letter-spacing:1.5px;text-transform:uppercase">CoRL 2018</span>
+          <span style="font-size:1.4rem;font-weight:800;color:#34c759">324 <span style="font-size:.8rem;color:#6e6e73;font-weight:600">citations</span></span>
+        </div>
+        <div style="font-size:1.05rem;font-weight:700;line-height:1.3;margin-bottom:6px">Driving Policy Transfer via Modularity and Abstraction</div>
+        <div style="font-size:.85rem;color:#6e6e73"><strong>Müller</strong>, Dosovitskiy, Ghanem, Koltun</div>
+      </a>
+
+      <a href="https://arxiv.org/abs/2008.10631" target="_blank" rel="noopener" style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;flex-direction:column;text-align:left">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+          <span style="font-size:.85rem;font-weight:700;color:#0071e3;letter-spacing:1.5px;text-transform:uppercase">ICRA 2021</span>
+          <span style="font-size:1rem;color:#0071e3;font-weight:700">⭐ 1,818 · 🍴 300</span>
+        </div>
+        <div style="font-size:1.05rem;font-weight:700;line-height:1.3;margin-bottom:6px">OpenBot: Turning Smartphones into Robots</div>
+        <div style="font-size:.85rem;color:#6e6e73"><strong>Müller</strong>, Koltun</div>
+      </a>
+
+      <a href="https://arxiv.org/abs/2405.07515" target="_blank" rel="noopener" style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;flex-direction:column;text-align:left">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+          <span style="font-size:.85rem;font-weight:700;color:#0071e3;letter-spacing:1.5px;text-transform:uppercase">ICRA 2024</span>
+          <span style="font-size:1rem;color:#0071e3;font-weight:700">72 robots · 1M+ frames</span>
+        </div>
+        <div style="font-size:1.05rem;font-weight:700;line-height:1.3;margin-bottom:6px">OpenBot-Fleet: A System for Collective Learning with Real Robots</div>
+        <div style="font-size:.85rem;color:#6e6e73"><strong>Müller</strong>, Brahmbhatt, Deka, Leboutet, Hafner, Koltun</div>
+      </a>
+
+      <a href="https://github.com/spear-sim/spear" target="_blank" rel="noopener" style="grid-column:span 2;background:linear-gradient(135deg,#0071e3,#5ac8fa);color:#fff;border-radius:14px;padding:16px 22px;text-decoration:none;box-shadow:0 4px 14px rgba(0,113,227,.18);display:flex;justify-content:space-between;align-items:center;text-align:left">
+        <div>
+          <div style="font-size:.85rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.9;margin-bottom:4px">ECCV 2026</div>
+          <div style="font-size:1.05rem;font-weight:700;line-height:1.3">SPEAR — Simulator for Photorealistic Embodied AI Research</div>
+          <div style="font-size:.85rem;opacity:.9;margin-top:4px">Roberts, Leboutet, Prakash, …, <strong>Müller</strong>, Koltun, Ros</div>
+        </div>
+        <div style="font-size:1.4rem;font-weight:800;white-space:nowrap;margin-left:18px">v1.0 · Feb 2026</div>
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<style>
+  @keyframes flyIn {
+    0%   { transform: translate(var(--fx), var(--fy)) scale(0.35) rotate(var(--rot)); opacity: 0; }
+    65%  { opacity: 1; }
+    100% { transform: translate(0,0) scale(1) rotate(0); opacity: 1; }
+  }
+  .ob-masonry {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row dense;
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .ob-tile {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,.08);
+    opacity: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .ob-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .ob-tile img[src*="image162"] { object-position: center bottom; }
+  .ob-tile img[src*="rc_truck_2"] { transform: scale(1.18); }
+  .ob-tile img[src*="image111"]   { transform: scale(1.18); }
+  .ob-tall { grid-column: 1; grid-row: 1 / span 2; aspect-ratio: 2 / 3; }
+  .slide.active .ob-tile {
+    animation: flyIn 0.85s cubic-bezier(.34, 1.56, .64, 1) both;
+    animation-delay: var(--delay);
+  }
+</style>
+
+<!-- ═══ COMMUNITY GALLERY ═══ -->
+<div class="slide" id="s28">
+  <div class="content center" style="max-width:1200px">
+    <div class="label reveal">Community</div>
+    <div class="h2 reveal" style="font-size:1.5rem;margin-bottom:16px">👥 …and then the community started building.</div>
+    <div class="ob-masonry">
+<div class="ob-tile ob-tall" style="--fx:154px;--fy:-242px;--rot:-15deg;--delay:0.22s"><img src="media/community/image103.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:67px;--fy:-196px;--rot:14deg;--delay:0.42s"><img src="media/community/image164.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:9px;--fy:-200px;--rot:-10deg;--delay:0.7s"><img src="media/community/image111.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:-102px;--fy:-279px;--rot:1deg;--delay:0.1s"><img src="media/community/image97.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:-61px;--fy:241px;--rot:18deg;--delay:0.26s"><img src="media/community/openbot_lite.jpg" alt="community build"></div>
+      <div class="ob-tile" style="--fx:-406px;--fy:-164px;--rot:4deg;--delay:0.08s"><img src="media/community/image162.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:-150px;--fy:308px;--rot:16deg;--delay:0.19s"><img src="media/community/image163.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:-379px;--fy:-339px;--rot:-2deg;--delay:0.99s"><img src="media/community/image166.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:425px;--fy:175px;--rot:-3deg;--delay:0.45s"><img src="media/community/rc_truck_2.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:404px;--fy:191px;--rot:2deg;--delay:0.21s"><img src="media/community/image93.png" alt="community build"></div>
+      <div class="ob-tile" style="--fx:-177px;--fy:-171px;--rot:18deg;--delay:0.63s"><img src="media/community/image94.png" alt="community build"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MTV ═══ -->
+<div class="slide" id="s29">
+  <div class="content center" style="max-width:1100px">
+    <div class="reveal"><div class="label">Community · MTV</div>
+    <div class="h2" style="margin-bottom:14px">A Mars-rover-style OpenBot.</div>
+    <p class="sub" style="margin-bottom:22px;font-size:1rem;color:#6e6e73">Multi-Terrain Vehicle · 6 wheels · rocker-bogie suspension · climbs stairs.</p></div>
+    <div class="reveal" style="max-width:760px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.12)">
+      <video id="mtv-video" controls preload="metadata" muted style="width:100%;height:auto;display:block">
+        <source src="media/openbot_mtv_teaser.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var v = document.getElementById('mtv-video');
+  if(!v) return;
+  var phase = 0;  // 0=idle, 1=normal 2→10, 2=fast 10→576, 3=normal 576→581, 4=done
+  function reset(){
+    phase = 0;
+    v.playbackRate = 1;
+  }
+  v.addEventListener('play', function(){
+    if (phase === 0) {
+      try { v.currentTime = 2; } catch(e){}
+      phase = 1;
+      v.playbackRate = 1;
+    }
+  });
+  v.addEventListener('timeupdate', function(){
+    var t = v.currentTime;
+    if (phase === 1 && t >= 10) {
+      phase = 2;
+      v.playbackRate = 16;   // browsers cap playbackRate; 16 is the safe max for fast-motion feel
+    } else if (phase === 2 && t >= 576) {  // 9:36
+      phase = 3;
+      v.playbackRate = 1;
+    } else if (phase === 3 && t >= 581) {  // 9:41
+      v.pause();
+      phase = 4;
+    }
+  });
+  v.addEventListener('seeked', function(){
+    // if user manually scrubs, re-evaluate phase
+    var t = v.currentTime;
+    if (t < 10) { phase = 1; v.playbackRate = 1; }
+    else if (t < 576) { phase = 2; v.playbackRate = 16; }
+    else if (t < 581) { phase = 3; v.playbackRate = 1; }
+    else { phase = 4; v.playbackRate = 1; }
+  });
+  v.addEventListener('ended', reset);
+})();
+</script>
+
+<!-- ═══ OPENBOT YODA ═══ -->
+<div class="slide" id="s30">
+  <div class="content center" style="max-width:1100px">
+    <div class="reveal"><div class="label">Community · OpenBot Yoda</div>
+    <div class="h2" style="margin-bottom:14px">Real-life Baby Yoda with AI.</div>
+    <p class="sub" style="margin-bottom:22px;font-size:1rem;color:#6e6e73">By Manuel Ahumada · because open source.</p></div>
+    <div class="reveal" style="max-width:760px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.12)">
+      <video id="yoda-video" controls preload="metadata" muted style="width:100%;height:auto;display:block">
+        <source src="media/openbot_yoda.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ KOREA + SINGAPORE ═══ -->
+<div class="slide" id="s31">
+  <div class="content center" style="max-width:1100px">
+    <div class="reveal"><div class="label">In classrooms worldwide</div>
+    <div class="h2" style="margin-bottom:14px">Autonomous driving on a track.</div>
+    <p class="sub" style="margin-bottom:22px;font-size:1rem;color:#6e6e73">Students in Korea and Singapore training nav policies on the same body you'd build for $50.</p></div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1000px;margin:0 auto">
+      <div class="video-wrap"><video id="demo-intl-korea" controls preload="auto" muted playsinline><source src="media/openbot_korea.mp4" type="video/mp4"></video><div style="text-align:center;margin-top:8px;font-size:.95rem;font-weight:600">🇰🇷 Korea</div></div>
+      <div class="video-wrap"><video id="demo-intl-sg" controls preload="auto" muted playsinline><source src="media/openbot_singapore.mp4" type="video/mp4"></video><div style="text-align:center;margin-top:8px;font-size:.95rem;font-weight:600">🇸🇬 Singapore</div></div>
+    </div>
+    <p class="reveal" style="margin-top:22px;font-size:.95rem;color:#6e6e73">📺 Full instructional + playground tutorial playlists on the <a href="https://www.youtube.com/@openbot4429/playlists" target="_blank" rel="noopener" style="color:#0071e3;text-decoration:none;font-weight:600">OpenBot YouTube channel</a>.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slide = document.getElementById('s31');
+  if (!slide) return;
+  var videos = slide.querySelectorAll('video');
+  function sync(){
+    if (slide.classList.contains('active')) {
+      videos.forEach(function(v){
+        try { v.currentTime = 0; } catch(e){}
+        var p = v.play();
+        if (p && p.catch) p.catch(function(){});
+      });
+    } else {
+      videos.forEach(function(v){ v.pause(); });
+    }
+  }
+  new MutationObserver(sync).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  if (document.readyState === 'complete') sync();
+  else window.addEventListener('load', sync);
+})();
+</script>
+
+<!-- ═══ OPENBOT FOR EDUCATION ═══ -->
+<div class="slide" id="s32">
+  <div class="content center" style="max-width:1180px">
+    <div class="label reveal">OpenBot for education</div>
+    <div class="h2 reveal" style="margin-bottom:28px">Used in classrooms worldwide.</div>
+    <div class="reveal" style="display:flex;justify-content:center;align-items:center;gap:24px;max-width:1100px;margin:0 auto">
+      <div style="width:680px;flex:0 0 680px;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.12)">
+        <video controls preload="metadata" muted style="width:100%;height:auto;display:block">
+          <source src="media/openbot_overview_video.mp4#t=197,207" type="video/mp4">
+        </video>
+      </div>
+      <div style="display:grid;grid-template-columns:max-content;gap:14px;text-align:left;font-size:1.1rem">
+        <div><span style="font-size:1.6rem;margin-right:6px">🇩🇪</span> Germany</div>
+        <div><span style="font-size:1.6rem;margin-right:6px">🇮🇳</span> India</div>
+        <div><span style="font-size:1.6rem;margin-right:6px">🇵🇹</span> Portugal</div>
+        <div><span style="font-size:1.6rem;margin-right:6px">🇸🇬</span> Singapore</div>
+        <div><span style="font-size:1.6rem;margin-right:6px">🇰🇷</span> South Korea</div>
+        <div><span style="font-size:1.6rem;margin-right:6px">🇬🇧</span> UK</div>
+        <div><span style="font-size:1.6rem;margin-right:6px">🇰🇬</span> Kyrgyzstan</div>
+        <div style="color:#6e6e73;font-style:italic">…and more</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OPENBOT CURRICULUM ═══ -->
+<div class="slide" id="s33">
+  <div class="content center" style="max-width:1180px">
+    <div class="label reveal">OpenBot for education</div>
+    <div class="h2 reveal" style="margin-bottom:22px">A full curriculum on YouTube.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1100px;margin:0 auto">
+      <div>
+        <div class="video-wrap" style="max-width:580px">
+          <video controls preload="metadata" muted>
+            <source src="media/openbot_overview_video.mp4#t=87,174" type="video/mp4">
+          </video>
+        </div>
+        <div style="text-align:center;margin-top:10px;font-size:.95rem;font-weight:600">🏫 Hands-on session</div>
+      </div>
+      <div>
+        <div class="video-wrap">
+          <video controls preload="metadata" muted>
+            <source src="media/openbot_lesson_motion.mp4#t=280" type="video/mp4">
+          </video>
+        </div>
+        <div style="text-align:center;margin-top:10px;font-size:.95rem;font-weight:600">📺 Lesson 04 · Motion</div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:14px;font-size:.95rem;color:#6e6e73">📺 Watch the full curriculum on the <a href="https://www.youtube.com/@openbot4429/playlists" target="_blank" rel="noopener" style="color:#0071e3;text-decoration:none;font-weight:600">OpenBot YouTube channel</a>.</p>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  var v = document.getElementById('yoda-video');
+  if(!v) return;
+  var phase = 0;  // 0=idle, 1=normal 2→10, 2=fast 10→575, 3=done
+  v.addEventListener('play', function(){
+    if (phase === 0) {
+      try { v.currentTime = 2; } catch(e){}
+      phase = 1;
+      v.playbackRate = 1;
+    }
+  });
+  v.addEventListener('timeupdate', function(){
+    var t = v.currentTime;
+    if (phase === 1 && t >= 10) {
+      phase = 2;
+      v.playbackRate = 16;   // browsers cap; 16 is safe max for fast-motion feel
+    } else if (phase === 2 && t >= 575) {  // 9:35
+      v.pause();
+      v.playbackRate = 1;
+      phase = 3;
+    }
+  });
+  v.addEventListener('seeked', function(){
+    var t = v.currentTime;
+    if (t < 10) { phase = 1; v.playbackRate = 1; }
+    else if (t < 575) { phase = 2; v.playbackRate = 16; }
+    else { phase = 3; v.playbackRate = 1; }
+  });
+  v.addEventListener('ended', function(){ phase = 0; v.playbackRate = 1; });
+})();
+</script>
+
+<!-- ═══ OPENBOT.ORG ═══ -->
+<div class="slide" id="s34">
+  <div class="content center" style="max-width:1100px">
+    <div class="label reveal">Everything's open source</div>
+    <div class="h2 reveal" style="margin-bottom:36px">openbot.org</div>
+    <div class="reveal" style="background:#fff;padding:22px;border-radius:18px;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 24px rgba(0,0,0,.06);display:inline-block;margin-bottom:32px">
+      <img src="media/qr_code.svg" alt="openbot.org QR" style="width:260px;height:260px;display:block">
+    </div>
+    <div class="reveal" style="display:flex;justify-content:center;gap:28px;flex-wrap:wrap;font-size:1rem;color:#3a3a3c">
+      <span>📐 Hardware designs</span>
+      <span>💾 Code</span>
+      <span>📚 Datasets</span>
+      <span>📝 Papers</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TRANSITION TO TIPS ═══ -->
+<div class="slide" id="s35">
+  <div class="content center" style="max-width:1180px">
+    <div class="label reveal">Beyond OpenBot</div>
+    <div class="h2 reveal" style="margin-bottom:32px">Three things this taught me.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1040px;margin:0 auto">
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:30px 22px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.05)">
+        <div style="font-size:3.4rem;margin-bottom:12px">🔭</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0071e3;letter-spacing:.5px">Follow curiosity</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:30px 22px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.05)">
+        <div style="font-size:3.4rem;margin-bottom:12px">🛠</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0071e3;letter-spacing:.5px">Build &gt; consume</div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:30px 22px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.05)">
+        <div style="font-size:3.4rem;margin-bottom:12px">🤝</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#0071e3;letter-spacing:.5px">Use AI as a tool</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AI IS EVERYWHERE NOW ═══ -->
+<div class="slide" id="s36">
+  <div class="content center" style="max-width:1180px">
+    <div class="label reveal">Reality check</div>
+    <div class="h2 reveal" style="margin-bottom:30px">AI is in everyone's workflow now.</div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:980px;margin:0 auto 30px">
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:22px;text-align:left;display:flex;align-items:center;gap:18px">
+        <div style="font-size:2.6rem">🎓</div>
+        <div>
+          <div style="font-weight:800;font-size:1.15rem;margin-bottom:4px">Students</div>
+          <div style="font-size:.95rem;color:#3a3a3c">Homework. Essays. Research. Lecture notes.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:22px;text-align:left;display:flex;align-items:center;gap:18px">
+        <div style="font-size:2.6rem">💻</div>
+        <div>
+          <div style="font-weight:800;font-size:1.15rem;margin-bottom:4px">Engineers</div>
+          <div style="font-size:.95rem;color:#3a3a3c">Copilot · Cursor · Claude Code. Most new code is AI-assisted.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:22px;text-align:left;display:flex;align-items:center;gap:18px">
+        <div style="font-size:2.6rem">✍️</div>
+        <div>
+          <div style="font-weight:800;font-size:1.15rem;margin-bottom:4px">Writers</div>
+          <div style="font-size:.95rem;color:#3a3a3c">Drafts. Edits. Brainstorms. Translations.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:22px;text-align:left;display:flex;align-items:center;gap:18px">
+        <div style="font-size:2.6rem">🔬</div>
+        <div>
+          <div style="font-weight:800;font-size:1.15rem;margin-bottom:4px">Researchers</div>
+          <div style="font-size:.95rem;color:#3a3a3c">Literature reviews. Data analysis. Code prototypes.</div>
+        </div>
+      </div>
+    </div>
+    <p class="reveal" style="font-size:1.4rem;font-weight:700;color:#0071e3;margin:0">The question isn't <em>if</em> you use AI. It's <em>how</em>.</p>
+  </div>
+</div>
+
+<!-- ═══ AI: TUTOR OR CRUTCH ═══ -->
+<div class="slide" id="s37">
+  <div class="content">
+    <div class="label reveal">AI as Tool, Not Crutch</div>
+    <div class="h2 reveal" style="margin-bottom:32px">The AI interaction spectrum.</div>
+    <div class="grid3" style="gap:24px">
+      <!-- DO IT -->
+      <div class="card reveal" style="padding:28px 24px;text-align:center;display:flex;flex-direction:column">
+        <div style="margin-bottom:16px;display:flex;justify-content:center">
+          <svg width="56" height="56" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect x="14" y="4" width="4" height="20" rx="1" fill="#0071e3"/>
+            <rect x="9" y="2" width="14" height="6" rx="1.5" fill="#3a3a3c"/>
+            <line x1="16" y1="26" x2="16" y2="29" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="11" y1="28" x2="21" y2="28" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="bold" style="font-size:1rem;margin-bottom:14px;color:#0071e3;text-transform:uppercase;letter-spacing:1.5px">Do It Yourself</div>
+        <div style="font-size:1.3rem;color:#1d1d1f;font-weight:600;margin-bottom:18px;flex:1">Roll up your sleeves.<br>No AI.</div>
+        <div style="font-size:1.05rem;color:#3a3a3c;margin-bottom:6px">✓ Learning, edge cases, high stakes</div>
+        <div style="font-size:1.05rem;color:#6e6e73;text-decoration:line-through">⚠ Autopiloting through the hard parts</div>
+      </div>
+      <!-- DEBATE -->
+      <div class="card reveal" style="padding:28px 24px;text-align:center;display:flex;flex-direction:column">
+        <div style="margin-bottom:16px;display:flex;justify-content:center">
+          <svg width="56" height="56" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6 H17 a2 2 0 0 1 2 2 V16 a2 2 0 0 1 -2 2 H9 L4 22 V18 H3 a1 1 0 0 1 -1 -1 V7 a1 1 0 0 1 1 -1 Z" fill="#0071e3" opacity="0.85"/>
+            <path d="M29 12 H15 a2 2 0 0 0 -2 2 V22 a2 2 0 0 0 2 2 H23 L28 28 V24 H29 a1 1 0 0 0 1 -1 V13 a1 1 0 0 0 -1 -1 Z" fill="#0071e3"/>
+          </svg>
+        </div>
+        <div class="bold" style="font-size:1rem;margin-bottom:14px;color:#0071e3;text-transform:uppercase;letter-spacing:1.5px">Debate</div>
+        <div style="font-size:1.3rem;color:#1d1d1f;font-weight:600;margin-bottom:18px;flex:1">Stress-test your view<br>with AI.</div>
+        <div style="font-size:1.05rem;color:#3a3a3c;margin-bottom:6px">✓ After forming your own view</div>
+        <div style="font-size:1.05rem;color:#6e6e73;text-decoration:line-through">⚠ Before you've thought at all</div>
+      </div>
+      <!-- DELEGATE -->
+      <div class="card reveal" style="padding:28px 24px;text-align:center;display:flex;flex-direction:column">
+        <div style="margin-bottom:16px;display:flex;justify-content:center">
+          <svg width="56" height="56" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 16 L26 4 L20 16 L26 28 Z" fill="#0071e3"/>
+            <line x1="3" y1="16" x2="20" y2="16" stroke="#fff" stroke-width="1" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="bold" style="font-size:1rem;margin-bottom:14px;color:#0071e3;text-transform:uppercase;letter-spacing:1.5px">Delegate</div>
+        <div style="font-size:1.3rem;color:#1d1d1f;font-weight:600;margin-bottom:18px;flex:1">Hand off the work<br>that won't sharpen you.</div>
+        <div style="font-size:1.05rem;color:#3a3a3c;margin-bottom:6px">✓ Mechanical, repetitive work</div>
+        <div style="font-size:1.05rem;color:#6e6e73;text-decoration:line-through">⚠ Work that sharpens you</div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:22px;text-align:center;font-size:1.7rem;font-weight:700;color:#1d1d1f">Don't default to delegate.<br>AI as tutor extends you. AI as crutch replaces you.</p>
+  </div>
+</div>
+
+<!-- ═══ FLYWHEEL ═══ -->
+<div class="slide" id="s38">
+  <div class="content center" style="max-width:1200px">
+    <div class="label reveal">Stop Consuming. Start Building.</div>
+    <div class="h2 reveal" style="margin-bottom:32px">You don't prepare for the opportunity.<br>Projects are the preparation.</div>
+    <div class="grid3" style="gap:24px">
+      <div class="card reveal" style="text-align:center;padding:32px 24px">
+        <div style="margin-bottom:16px;display:flex;justify-content:center">
+          <svg width="56" height="56" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="14" width="20" height="14" rx="2" fill="#0071e3"/>
+            <rect x="9" y="17" width="5" height="5" fill="#fff" opacity="0.6"/>
+            <rect x="18" y="17" width="5" height="5" fill="#fff" opacity="0.6"/>
+            <polygon points="4,14 16,4 28,14" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="bold" style="font-size:1rem;margin-bottom:14px;color:#0071e3;text-transform:uppercase;letter-spacing:1.5px">Build</div>
+        <div style="font-size:1.3rem;color:#1d1d1f;font-weight:600">Build what excites you.<br>Ignore prestige.</div>
+      </div>
+      <div class="card reveal" style="text-align:center;padding:32px 24px">
+        <div style="margin-bottom:16px;display:flex;justify-content:center">
+          <svg width="56" height="56" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <line x1="6" y1="22" x2="26" y2="6" stroke="#0071e3" stroke-width="3" stroke-linecap="round"/>
+            <polyline points="20,6 26,6 26,12" fill="none" stroke="#0071e3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="6" cy="22" r="3" fill="#0071e3"/>
+          </svg>
+        </div>
+        <div class="bold" style="font-size:1rem;margin-bottom:14px;color:#0071e3;text-transform:uppercase;letter-spacing:1.5px">Stretch</div>
+        <div style="font-size:1.3rem;color:#1d1d1f;font-weight:600">Aim beyond your current skill.<br>That's where growth lives.</div>
+      </div>
+      <div class="card reveal" style="text-align:center;padding:32px 24px">
+        <div style="margin-bottom:16px;display:flex;justify-content:center">
+          <svg width="56" height="56" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="22" r="5" fill="#0071e3" opacity="0.5"/>
+            <circle cx="16" cy="16" r="6" fill="#0071e3" opacity="0.7"/>
+            <circle cx="23" cy="9" r="7" fill="#0071e3"/>
+          </svg>
+        </div>
+        <div class="bold" style="font-size:1rem;margin-bottom:14px;color:#0071e3;text-transform:uppercase;letter-spacing:1.5px">Compound</div>
+        <div style="font-size:1.3rem;color:#1d1d1f;font-weight:600">Pick projects that<br>unlock the next.</div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:28px;text-align:center;font-size:1.7rem;font-weight:700;color:#1d1d1f">Curiosity today. Opportunity tomorrow.<br>Build now. Be ready always.</p>
+  </div>
+</div>
+
+<!-- ═══ RESOURCES ═══ -->
+<div class="slide" id="s39">
+  <div class="content">
+    <div class="label reveal">The Builder's Resource Checklist</div>
+    <div class="h2 reveal" style="margin-bottom:22px">Tools worth your time.</div>
+    <div class="grid4 reveal">
+      <a class="card" style="text-align:center" href="https://www.paulgraham.com/articles.html" target="_blank" rel="noopener">
+        <div style="margin-bottom:10px;display:flex;justify-content:center"><svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16,8 L3,11 L3,26 L16,23 L29,26 L29,11 Z" fill="#3a3a3c"/><line x1="16" y1="8" x2="16" y2="23" stroke="#f5f5f7" stroke-width="1.5"/><line x1="6" y1="15" x2="14" y2="14" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/><line x1="6" y1="18" x2="14" y2="17" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/><line x1="18" y1="14" x2="26" y2="15" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/><line x1="18" y1="17" x2="26" y2="18" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:6px">Paul Graham</div>
+        <div class="tiny">Great essays, for example "How to Do Great Work" and "How to Do What You Love".</div>
+      </a>
+      <a class="card" style="text-align:center" href="https://www.khanacademy.org" target="_blank" rel="noopener">
+        <div style="margin-bottom:10px;display:flex;justify-content:center"><svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="28" height="22" rx="2" fill="#3a3a3c"/><polygon points="13,15 13,23 21,19" fill="#fff"/><rect x="4" y="8" width="28" height="3.5" fill="#34c759" opacity="0.8"/></svg></div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:6px">Khan Academy</div>
+        <div class="tiny">Free courses on math, science, CS — at your own pace.</div>
+      </a>
+      <a class="card" style="text-align:center" href="https://claude.ai/code" target="_blank" rel="noopener">
+        <div style="margin-bottom:10px;display:flex;justify-content:center"><svg width="36" height="36" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg"><path fill="#d97757" d="M 233.959793 800.214905 L 468.644287 668.536987 L 472.590637 657.100647 L 468.644287 650.738403 L 457.208069 650.738403 L 417.986633 648.322144 L 283.892639 644.69812 L 167.597321 639.865845 L 54.926208 633.825623 L 26.577238 627.785339 L 3.3e-05 592.751709 L 2.73832 575.27533 L 26.577238 559.248352 L 60.724873 562.228149 L 136.187973 567.382629 L 249.422867 575.194763 L 331.570496 580.026978 L 453.261841 592.671082 L 472.590637 592.671082 L 475.328857 584.859009 L 468.724915 580.026978 L 463.570557 575.194763 L 346.389313 495.785217 L 219.543671 411.865906 L 153.100723 363.543762 L 117.181267 339.060425 L 99.060455 316.107361 L 91.248367 266.01355 L 123.865784 230.093994 L 167.677887 233.073853 L 178.872513 236.053772 L 223.248367 270.201477 L 318.040283 343.570496 L 441.825592 434.738342 L 459.946411 449.798706 L 467.194672 444.64447 L 468.080597 441.020203 L 459.946411 427.409485 L 392.617493 305.718323 L 320.778564 181.932983 L 288.80542 130.630859 L 280.348999 99.865845 C 277.369171 87.221436 275.194641 76.590698 275.194641 63.624268 L 312.322174 13.20813 L 332.8591 6.604126 L 382.389313 13.20813 L 403.248352 31.328979 L 434.013519 101.71814 L 483.865753 212.537048 L 561.181274 363.221497 L 583.812134 407.919434 L 595.892639 449.315491 L 600.40271 461.959839 L 608.214783 461.959839 L 608.214783 454.711609 L 614.577271 369.825623 L 626.335632 265.61084 L 637.771851 131.516846 L 641.718201 93.745117 L 660.402832 48.483276 L 697.530334 24.000122 L 726.52356 37.852417 L 750.362549 72 L 747.060486 94.067139 L 732.886047 186.201416 L 705.100708 330.52356 L 686.979919 427.167847 L 697.530334 427.167847 L 709.61084 415.087341 L 758.496704 350.174561 L 840.644348 247.490051 L 876.885925 206.738342 L 919.167847 161.71814 L 946.308838 140.29541 L 997.61084 140.29541 L 1035.38269 196.429626 L 1018.469849 254.416199 L 965.637634 321.422852 L 921.825562 378.201538 L 859.006714 462.765259 L 819.785278 530.41626 L 823.409424 535.812073 L 832.75177 534.92627 L 974.657776 504.724915 L 1051.328979 490.872559 L 1142.818848 475.167786 L 1184.214844 494.496582 L 1188.724854 514.147644 L 1172.456421 554.335693 L 1074.604126 578.496765 L 959.838989 601.449829 L 788.939636 641.879272 L 786.845764 643.409485 L 789.261841 646.389343 L 866.255127 653.637634 L 899.194702 655.409424 L 979.812134 655.409424 L 1129.932861 666.604187 L 1169.154419 692.537109 L 1192.671265 724.268677 L 1188.724854 748.429688 L 1128.322144 779.194641 L 1046.818848 759.865845 L 856.590759 714.604126 L 791.355774 698.335754 L 782.335693 698.335754 L 782.335693 703.731567 L 836.69812 756.885986 L 936.322205 846.845581 L 1061.073975 962.81897 L 1067.436279 991.490112 L 1051.409424 1014.120911 L 1034.496704 1011.704712 L 924.885986 929.234924 L 882.604126 892.107544 L 786.845764 811.48999 L 780.483276 811.48999 L 780.483276 819.946289 L 802.550415 852.241699 L 919.087341 1027.409424 L 925.127625 1081.127686 L 916.671204 1098.604126 L 886.469849 1109.154419 L 853.288696 1103.114136 L 785.073914 1007.355835 L 714.684631 899.516785 L 657.906067 802.872498 L 650.979858 806.81897 L 617.476624 1167.704834 L 601.771851 1186.147705 L 565.530212 1200 L 535.328857 1177.046997 L 519.302124 1139.919556 L 535.328857 1066.550537 L 554.657776 970.792053 L 570.362488 894.68457 L 584.536926 800.134277 L 592.993347 768.724976 L 592.429626 766.630859 L 585.503479 767.516968 L 514.22821 865.369263 L 405.825531 1011.865906 L 320.053711 1103.677979 L 299.516815 1111.812256 L 263.919525 1093.369263 L 267.221497 1060.429688 L 287.114136 1031.114136 L 405.825531 880.107361 L 477.422913 786.52356 L 523.651062 732.483276 L 523.328918 724.671265 L 520.590698 724.671265 L 205.288605 929.395935 L 149.154434 936.644409 L 124.993355 914.01355 L 127.973183 876.885986 L 139.409409 864.80542 L 234.201385 799.570435 Z"/></svg></div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:6px">Claude Code</div>
+        <div class="tiny">Automate tedious syntax so you can focus on architecture and the "Why".</div>
+      </a>
+      <a class="card" style="text-align:center" href="https://notebooklm.google.com" target="_blank" rel="noopener">
+        <div style="margin-bottom:10px;display:flex;justify-content:center"><svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="22" height="26" rx="2" fill="#3a3a3c"/><rect x="6" y="4" width="5" height="26" rx="1" fill="#0071e3" opacity="0.8"/><line x1="15" y1="11" x2="25" y2="11" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="15" x2="25" y2="15" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="19" x2="21" y2="19" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:6px">NotebookLM</div>
+        <div class="tiny">Synthesise and learn complex new domains quickly. Scaffold, don't shortcut.</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FINAL THOUGHT ═══ -->
+<div class="slide" id="s40">
+  <div class="content center" style="max-width:920px">
+    <div class="label reveal">Final Thought</div>
+    <div class="quote reveal" style="margin-bottom:20px">"The way to do great work<br>is to love what you do."</div>
+    <p class="sub reveal">— Steve Jobs, Stanford Commencement, 2005</p>
+  </div>
+</div>
+
+<!-- ═══ BE READY ═══ -->
+<div class="slide" id="s41">
+  <div class="photo-bg" style="background-image:url('media/be_ready_bg.jpg');background-position:center"></div>
+  <div class="overlay-soft"></div>
+  <div class="content center" style="max-width:920px;display:flex;flex-direction:column;justify-content:space-evenly;height:80vh;padding-top:12vh">
+    <div class="label reveal">Get Ready. Start Now.</div>
+    <div class="hero reveal" style="font-size:clamp(2.8rem,6vw,5.5rem);margin-top:-20px">Get ready.</div>
+    <p class="sub reveal" style="max-width:740px;margin:0 auto">Follow your curiosity and passion. When the big opportunity comes, you won't have time to prepare — you need to be ready, and you are, because you've been building for years. Don't wait for a perfect plan.</p>
+    <div class="hero reveal" style="font-size:clamp(3.8rem,8.5vw,8rem)">Start now.</div>
+  </div>
+</div>
+
+<!-- ═══ ONE MORE THING ═══ -->
+<div class="slide" id="s42">
+  <div class="mesh">
+    <div class="blob" style="width:380px;height:380px;top:-80px;right:-60px;background:#5ac8fa"></div>
+    <div class="blob" style="width:300px;height:300px;bottom:-60px;left:-40px;background:#34c759"></div>
+  </div>
+  <div class="content center" style="max-width:960px">
+    <div class="label reveal">One More Thing</div>
+    <div class="hero reveal" style="font-size:clamp(2.4rem,5vw,4.8rem);margin-bottom:28px">This presentation<br>was a project.</div>
+    <div class="grid3 reveal" style="margin-bottom:28px;text-align:left">
+      <div class="card" style="padding:20px 22px">
+        <div style="margin-bottom:8px;display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="18" width="5" height="8" rx="1" fill="#6e6e73"/><rect x="10" y="11" width="5" height="15" rx="1" fill="#6e6e73"/><rect x="18" y="5" width="5" height="21" rx="1" fill="#0071e3" opacity="0.8"/><line x1="2" y1="26" x2="26" y2="26" stroke="#3a3a3c" stroke-width="1.5"/></svg></div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:6px">Before</div>
+        <div class="tiny" style="color:#3a3a3c">PowerPoint. Keynote. Google Slides.</div>
+      </div>
+      <div class="card" style="padding:20px 22px;background:rgba(0,113,227,.06);border-color:rgba(0,113,227,.2)">
+        <div style="margin-bottom:8px;display:flex;justify-content:center"><svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="3" width="26" height="20" rx="3" fill="#3a3a3c"/><polyline points="8,9 4,14 8,19" stroke="#34c759" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="20,9 24,14 20,19" stroke="#34c759" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="15" y1="8" x2="13" y2="20" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"/><rect x="6" y="24" width="16" height="1.5" rx="1" fill="#6e6e73" opacity="0.4"/></svg></div>
+        <div class="bold" style="font-size:1.3rem;margin-bottom:6px">This time</div>
+        <div class="tiny" style="color:#3a3a3c">Static HTML. Pure code. No slides app.<br>Built with Claude Code.</div>
+      </div>
+      <div class="card" style="padding:20px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div class="bold" style="font-size:1.3rem;margin-bottom:6px">View online</div>
+        <img src="media/qr_code.svg" alt="QR code" style="width:90px;height:90px;display:block;margin-bottom:8px">
+        <div class="tiny" style="color:#3a3a3c">Scan to open this presentation.</div>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:22px;text-align:center;font-size:1.7rem;font-weight:700;color:#1d1d1f">Stay curious. Find interesting projects. Never stop learning.</p>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn" id="prev">&#8249;</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="next">&#8250;</button>
+  <div class="nav-sep"></div>
+  <span class="nav-ctr" id="ctr"></span>
+  <div class="nav-sep"></div>
+  <button class="anim-toggle" id="anim-toggle">BUILD ON</button>
+</div>
+
+<script>
+(function(){
+const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let cur = 0;
+
+  // Move each slide's label to the bottom of the slide (outside .content)
+  slides.forEach(function(slide){
+    var label = slide.querySelector('.label');
+    if(!label) return;
+    label.classList.remove('reveal'); // always visible, not part of build-up
+    label.style.cssText = 'position:absolute;bottom:72px;left:50%;transform:translateX(-50%);z-index:10;margin:0;opacity:1;white-space:nowrap';
+    slide.appendChild(label);
+  });
+
+  const dotsEl = document.getElementById('dots');
+  const ctrEl  = document.getElementById('ctr');
+
+  slides.forEach(function(_, i){
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.addEventListener('click', function(){ goTo(i); });
+    dotsEl.appendChild(d);
+  });
+
+  const animToggleEl = document.getElementById('anim-toggle');
+  var buildMode = true; // build-up animations on by default
+
+  function updateNav(){
+    dotsEl.querySelectorAll('.dot').forEach(function(d,i){
+      d.classList.toggle('active', i===cur);
+    });
+    ctrEl.textContent = (cur+1) + ' / ' + total;
+    history.replaceState(null, '', '#' + slides[cur].id);
+  }
+
+  animToggleEl.addEventListener('click', function(){
+    buildMode = !buildMode;
+    animToggleEl.textContent = buildMode ? 'BUILD ON' : 'BUILD OFF';
+    animToggleEl.classList.toggle('off', !buildMode);
+    if(!buildMode) revealAll(slides[cur]); // show everything on current slide immediately
+  });
+
+  var stepIdx = 0;
+
+  function resetReveal(slide){
+    slide.querySelectorAll('.reveal').forEach(function(el){
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(14px)';
+    });
+    slide.querySelectorAll('.bar-fill').forEach(function(bar){
+      bar.removeAttribute('data-inited');
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+    });
+  }
+
+  function revealStep(slide, idx){
+    var el = slide.querySelectorAll('.reveal')[idx];
+    if(!el) return;
+    void el.offsetHeight;
+    el.style.transition = 'opacity .38s ease, transform .38s ease';
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+    el.querySelectorAll('.bar-fill:not([data-inited])').forEach(function(bar, i){
+      bar.setAttribute('data-inited','1');
+      void bar.offsetHeight;
+      bar.style.transition = 'width .85s ease '+(i*0.15)+'s';
+      bar.style.width = (bar.dataset.w||'0') + '%';
+    });
+  }
+
+  function revealAll(slide){
+    slide.querySelectorAll('.reveal').forEach(function(el){
+      el.style.transition = 'none';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+    slide.querySelectorAll('.bar-fill:not([data-inited])').forEach(function(bar){
+      bar.setAttribute('data-inited','1');
+      bar.style.transition = 'none';
+      bar.style.width = (bar.dataset.w||'0') + '%';
+    });
+    stepIdx = slide.querySelectorAll('.reveal').length - 1;
+  }
+
+  function pauseVideos(slide){
+    slide.querySelectorAll('video').forEach(function(v){ v.pause(); });
+  }
+
+  function goTo(n){
+    pauseVideos(slides[cur]);
+    resetReveal(slides[cur]);
+    slides[cur].classList.remove('active');
+    cur = ((n % total) + total) % total;
+    slides[cur].classList.add('active');
+    updateNav();
+    if(buildMode){
+      stepIdx = 0;
+      // first element appears instantly (no animation), rest build up on click
+      var first = slides[cur].querySelectorAll('.reveal')[0];
+      if(first){ first.style.transition='none'; first.style.opacity='1'; first.style.transform='translateY(0)'; }
+    } else {
+      revealAll(slides[cur]);
+    }
+  }
+
+  function advance(){
+    if(!buildMode){ goTo(cur + 1); return; }
+    var els = slides[cur].querySelectorAll('.reveal');
+    if(stepIdx < els.length - 1){
+      stepIdx++;
+      revealStep(slides[cur], stepIdx);
+    } else {
+      var vid = slides[cur].querySelector('video');
+      if(vid && vid.paused && !vid.ended){
+        try{ vid.play(); } catch(e){}
+      } else {
+        goTo(cur + 1);
+      }
+    }
+  }
+
+  function retreat(){
+    pauseVideos(slides[cur]);
+    resetReveal(slides[cur]);
+    slides[cur].classList.remove('active');
+    cur = ((cur - 1 + total) % total);
+    slides[cur].classList.add('active');
+    revealAll(slides[cur]);
+    updateNav();
+  }
+
+  window.addEventListener('hashchange', function(){
+    var h = window.location.hash.slice(1);
+    var idx = slides.findIndex(function(s){ return s.id === h; });
+    if(idx >= 0 && idx !== cur) goTo(idx);
+  });
+
+  document.getElementById('prev').addEventListener('click', retreat);
+  document.getElementById('next').addEventListener('click', advance);
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '||e.key==='PageDown'||e.key==='Enter'||e.keyCode===40||e.keyCode===39||e.keyCode===34){ e.preventDefault(); advance(); }
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'||e.keyCode===38||e.keyCode===37||e.keyCode===33){ e.preventDefault(); retreat(); }
+  });
+
+  var tx = 0;
+  document.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e){
+    var d = tx - e.changedTouches[0].clientX;
+    if(Math.abs(d)>50){ d>0 ? advance() : retreat(); }
+  });
+
+  // Restore slide from URL hash on load
+  var hash = window.location.hash.slice(1);
+  var startIdx = slides.findIndex(function(s){ return s.id === hash; });
+  if(startIdx > 0){
+    slides[0].classList.remove('active');
+    cur = startIdx;
+    slides[cur].classList.add('active');
+  }
+
+  updateNav();
+  if(buildMode){
+    resetReveal(slides[cur]);
+    // Show first element immediately on load (no click needed)
+    stepIdx = 0;
+    var firstEl = slides[cur].querySelectorAll('.reveal')[0];
+    if(firstEl){ firstEl.style.transition='none'; firstEl.style.opacity='1'; firstEl.style.transform='translateY(0)'; }
+  } else {
+    revealAll(slides[cur]);
+  }
+})();
+
+// Video fallback: swap to YouTube embed if local file unavailable
+(function(){
+  var vid = document.getElementById('s18-video');
+  if(!vid) return;
+  function useYoutube(){
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/n9Yr-guo81s';
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    if(vid.parentNode) vid.parentNode.replaceChild(iframe, vid);
+  }
+  var isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if(isLocal){
+    vid.addEventListener('error', useYoutube, true);
+  } else {
+    useYoutube();
+  }
+})();
+</script>
+
+<script>
+// ── HOSTED VIDEO SHIM ──
+// GitHub Pages doesn't serve Git LFS files. When this deck is opened via http(s),
+// rewrite local media/ video sources to GitHub Release attachment URLs so the
+// videos play online. Local file:// opens unchanged.
+(function(){
+  if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
+  var RELEASE_BASE = 'https://github.com/thias15/openbot-sjsu-2026/releases/download/v1.0/';
+  document.querySelectorAll('video source').forEach(function(source){
+    var s = source.getAttribute('src');
+    if (!s || !s.startsWith('media/')) return;
+    if (!/\.mp4(?:#|$)/.test(s)) return;
+    var hash = s.indexOf('#');
+    var path = hash >= 0 ? s.slice(0, hash) : s;
+    var frag = hash >= 0 ? s.slice(hash) : '';
+    var filename = path.split('/').pop();
+    source.setAttribute('src', RELEASE_BASE + filename + frag);
+  });
+  document.querySelectorAll('video').forEach(function(v){ v.load(); });
+})();
+</script>
+</body>
+</html>
